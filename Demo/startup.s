@@ -35,27 +35,6 @@ irq_handler:        .word vFreeRTOS_ISR
 fiq_handler:        .word fiq
 
 reset:
-	/* Disable IRQ & FIQ */
-	cpsid if
-
-	/* Check for HYP mode */
-	mrs r0, cpsr_all
-	and r0, r0, #0x1F
-	mov r8, #0x1A
-	cmp r0, r8
-	beq overHyped
-	b continueBoot
-
-overHyped: /* Get out of HYP mode */
-	ldr r1, =continueBoot
-	msr ELR_hyp, r1
-	mrs r1, cpsr_all
-	and r1, r1, #0x1f	;@ CPSR_MODE_MASK
-	orr r1, r1, #0x13	;@ CPSR_MODE_SUPERVISOR
-	msr SPSR_hyp, r1
-	eret
-
-continueBoot:
 	;@	In the reset handler, we need to copy our interrupt vector table to 0x0000, its currently at 0x8000
 
 	mov r0,#0x8000								;@ Store the source pointer

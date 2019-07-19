@@ -16,7 +16,7 @@
 
 
 /* Constants required to setup the VIC for the tick ISR. */
-#define portTIMER_BASE                    		( (unsigned long ) 0x3f00B400 )
+#define portTIMER_BASE                    		( (unsigned long ) 0x2000B400 )
 
 typedef struct _BCM2835_TIMER_REGS {
 	unsigned long LOD;

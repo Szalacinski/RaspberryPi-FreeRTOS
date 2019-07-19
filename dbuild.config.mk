@@ -1,7 +1,7 @@
-RASPPI	?= 2
+RASPPI	?= 1
 
 ifeq ($(strip $(RASPPI)),1)
-ARCH	?= -march=armv6j -mtune=arm1176jzf-s -mfloat-abi=hard 
+ARCH	?= -march=armv6zk -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp
 else
 ARCH	?= -march=armv7-a -mtune=cortex-a7 -mfloat-abi=hard
 endif
@@ -13,7 +13,7 @@ CFLAGS += -mno-unaligned-access
 CFLAGS += -I $(BASE)FreeRTOS/Source/portable/GCC/RaspberryPi/
 CFLAGS += -I $(BASE)FreeRTOS/Source/include/
 CFLAGS += -I $(BASE)Drivers/
-CFLAGS += -I $(BASE)Drivers/lan9514/include/
-CFLAGS += -I $(BASE)Drivers/FreeRTOS-Plus-TCP/include/
+#CFLAGS += -I $(BASE)Drivers/lan9514/include/
+#CFLAGS += -I $(BASE)Drivers/FreeRTOS-Plus-TCP/include/
 
 TOOLCHAIN=arm-none-eabi-
