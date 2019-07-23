@@ -8,15 +8,17 @@
 #define _UART_H_
 
 #define PBASE 0x20000000
+/*
 #define GPIO_BASE       (IO_BASE + 0x200000)
 #define GPIO            ((struct GPIOREG*) GPIO_BASE)
-
+*/
+/*
 #define GPFSEL1         (PBASE+0x00200004)
 #define GPSET0          (PBASE+0x0020001C)
 #define GPCLR0          (PBASE+0x00200028)
 #define GPPUD           (PBASE+0x00200094)
 #define GPPUDCLK0       (PBASE+0x00200098)
-
+*/
 #define AUX_ENABLES     (PBASE+0x00215004)
 #define AUX_MU_IO_REG   (PBASE+0x00215040)
 #define AUX_MU_IER_REG  (PBASE+0x00215044)

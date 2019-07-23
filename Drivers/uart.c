@@ -4,6 +4,7 @@
  *	
  **/
 #include "uart.h"
+#include "gpio.h"
 
 extern void PUT32 ( unsigned int, unsigned int );
 extern unsigned int GET32 ( unsigned int );
@@ -62,35 +63,36 @@ void print( char* ch)
 	uart_send(0x0A);
 }
 //-------------------------------------------------------------------
-void uart_init ( void )
+void uart_init(void)
 {
-    unsigned int ra;		
-//	PUT32(IRQ_DISABLE_1,1 << 29);
-    PUT32(AUX_ENABLES,1);
-    PUT32(AUX_MU_IER_REG,0);
-    PUT32(AUX_MU_CNTL_REG,0);
-    PUT32(AUX_MU_LCR_REG,3);
-    PUT32(AUX_MU_MCR_REG,0);
-	
-   // PUT32(AUX_MU_IER_REG,0);
-	//    MU_IER = 0x5;
-	 PUT32(AUX_MU_IER_REG,0x5);
-	 
-    PUT32(AUX_MU_IIR_REG,0xC6);
-    PUT32(AUX_MU_BAUD_REG,270);
-    ra=GET32(GPFSEL1);
-    ra&=~(7<<12); //gpio14
-    ra|=2<<12;    //alt5
-    ra&=~(7<<15); //gpio15
-    ra|=2<<15;    //alt5
-    PUT32(GPFSEL1,ra);
-    PUT32(GPPUD,0);
-    for(ra=0;ra<150;ra++) dummy(ra);
-    PUT32(GPPUDCLK0,(1<<14)|(1<<15));
-    for(ra=0;ra<150;ra++) dummy(ra);
-    PUT32(GPPUDCLK0,0);
-    PUT32(AUX_MU_CNTL_REG,3);
-	
-//	 PUT32(IRQ_ENABLE_1,1<<29);
-}
+	unsigned long a;
+		
+	//PUT32(IRQ_DISABLE_1,1 << 29);
 
+	PUT32(AUX_ENABLES,1); //change this to OR later
+	PUT32(AUX_MU_IER_REG,0);
+	PUT32(AUX_MU_CNTL_REG,0);
+	PUT32(AUX_MU_LCR_REG,3); //8-bit mode
+	PUT32(AUX_MU_MCR_REG,0); //RTS line low
+	PUT32(AUX_MU_IER_REG,0x5);
+
+	PUT32(AUX_MU_IIR_REG,0xC6);
+	PUT32(AUX_MU_BAUD_REG,270); //115200 baud
+
+	a = pRegs->GPFSEL[1];
+	a &= ~(7<<12);	//gpio14
+	a |= 2<<12;	//alt5
+	a &= ~(7<<15);	//gpio15
+	a |= 2<<15;	//alt5
+	pRegs->GPFSEL[1] = a;
+	pRegs->GPPUD[0] = 0;
+	for(a=0; a < 150; ++a)
+		dummy(a);
+	pRegs->GPPUDCLK[0] = ((1<<14)|(1<<15));
+	for(a=0; a < 150; ++a)
+		dummy(a);
+	pRegs->GPPUDCLK[0] = 0;	
+	PUT32(AUX_MU_CNTL_REG,3); //RX/TX enable
+	
+	//PUT32(IRQ_ENABLE_1,1<<29);
+}

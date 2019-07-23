@@ -26,6 +26,35 @@ enum GPIO_DIR {
 	GPIO_OUT
 };
 
+typedef struct {
+	unsigned long	GPFSEL[6];	///< Function selection registers.
+	unsigned long	Reserved_1;
+	unsigned long	GPSET[2];
+	unsigned long	Reserved_2;
+	unsigned long	GPCLR[2];
+	unsigned long	Reserved_3;
+	unsigned long	GPLEV[2];
+	unsigned long	Reserved_4;
+	unsigned long	GPEDS[2];
+	unsigned long	Reserved_5;
+	unsigned long	GPREN[2];
+	unsigned long	Reserved_6;
+	unsigned long	GPFEN[2];
+	unsigned long	Reserved_7;
+	unsigned long	GPHEN[2];
+	unsigned long	Reserved_8;
+	unsigned long	GPLEN[2];
+	unsigned long	Reserved_9;
+	unsigned long	GPAREN[2];
+	unsigned long	Reserved_A;
+	unsigned long	GPAFEN[2];
+	unsigned long	Reserved_B;
+	unsigned long	GPPUD[1];
+	unsigned long	GPPUDCLK[2];
+	//Ignoring the reserved and test bytes
+} BCM2835_GPIO_REGS;
+
+
 /* GPIO pin setup */
 void SetGpioFunction	(unsigned int pinNum, unsigned int funcNum);
 /* A simple wrapper around SetGpioFunction */
@@ -44,5 +73,7 @@ int PudGpio				(unsigned int pinNum, enum PULL_STATE state);
 void EnableGpioDetect	(unsigned int pinNum, enum DETECT_TYPE type);
 void DisableGpioDetect	(unsigned int pinNum, enum DETECT_TYPE type);
 void ClearGpioInterrupt	(unsigned int pinNum);
+
+extern volatile BCM2835_GPIO_REGS * const pRegs;
 
 #endif

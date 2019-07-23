@@ -3,6 +3,7 @@
 
 #include "interrupts.h"
 #include "gpio.h"
+#include "uart.h"
 
 void task1(void *pParam) {
 
@@ -10,6 +11,7 @@ void task1(void *pParam) {
 	while(1) {
 		i++;
 		SetGpio(47, 1);
+		print("Light on!");
 		vTaskDelay(200);
 	}
 }
@@ -21,6 +23,7 @@ void task2(void *pParam) {
 		i++;
 		vTaskDelay(100);
 		SetGpio(47, 0);
+		print("Light off!");
 		vTaskDelay(100);
 	}
 }
@@ -36,7 +39,7 @@ void main(void) {
 
 	DisableInterrupts();
 	InitInterruptController();
-
+	uart_init();
 	SetGpioFunction(47, 1);			// RDY led
 
 	xTaskCreate(task1, "LED_0", 128, NULL, 0, NULL);
