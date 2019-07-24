@@ -2,9 +2,6 @@
 #define _UART_H_
 
 typedef struct {
-	unsigned long AUX_IRQ;		//Auxiliary Interrupt Status
-	unsigned long AUX_ENABLES;	//Auxiliary Enables 
-	unsigned long Reserved_1[14];
 	unsigned long AUX_MU_IO_REG;	//Mini Uart I/O Data
 	unsigned long AUX_MU_IER_REG;	//Mini Uart Interrupt Enable
 	unsigned long AUX_MU_IIR_REG;	//Mini Uart Interrupt Identify

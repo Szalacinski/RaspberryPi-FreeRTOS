@@ -1,7 +1,8 @@
+#include "aux.h"
 #include "uart.h"
 #include "gpio.h"
 
-volatile BCM2835_UART1_REGS * const uart1_regs = (BCM2835_UART1_REGS *) (0x20215000);
+volatile BCM2835_UART1_REGS * const uart1_regs = (BCM2835_UART1_REGS *) (0x20215040);
 
 extern void dummy(unsigned int);
 
@@ -57,7 +58,7 @@ void uart_init(void)
 {
 	unsigned long a;
 
-	uart1_regs->AUX_ENABLES = 1; //change this to OR later
+	aux_regs->AUX_ENABLES |= 1;
 	uart1_regs->AUX_MU_IER_REG = 0;
 	uart1_regs->AUX_MU_CNTL_REG = 0;
 	uart1_regs->AUX_MU_LCR_REG = 3; //8-bit mode
