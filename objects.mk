@@ -42,6 +42,7 @@ OBJECTS += $(BUILD_DIR)Demo/main.o
 #OBJECTS += $(BUILD_DIR)Demo/trace.o
 OBJECTS += $(BUILD_DIR)Drivers/mem.o
 OBJECTS += $(BUILD_DIR)Drivers/uart.o
+#OBJECTS += $(BUILD_DIR)Drivers/i2c.o
 
 #video stuff
 #OBJECTS += $(BUILD_DIR)Drivers/video.o
