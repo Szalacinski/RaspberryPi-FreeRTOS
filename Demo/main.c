@@ -10,7 +10,7 @@ void task1(void *pParam) {
 	int i = 0;
 	while(1) {
 		i++;
-		SetGpio(47, 1);
+		SetGpio(ACT_LED, 1);
 		print("Light on!");
 		vTaskDelay(200);
 	}
@@ -22,7 +22,7 @@ void task2(void *pParam) {
 	while(1) {
 		i++;
 		vTaskDelay(100);
-		SetGpio(47, 0);
+		SetGpio(ACT_LED, 0);
 		print("Light off!");
 		vTaskDelay(100);
 	}
@@ -40,7 +40,7 @@ void main(void) {
 	DisableInterrupts();
 	InitInterruptController();
 	uart_init();
-	SetGpioFunction(47, 1);			// RDY led
+	SetGpioFunction(ACT_LED, GPIO_OUT);
 
 	xTaskCreate(task1, "LED_0", 128, NULL, 0, NULL);
 	xTaskCreate(task2, "LED_1", 128, NULL, 0, NULL);
@@ -51,7 +51,5 @@ void main(void) {
 	 *	We should never get here, but just in case something goes wrong,
 	 *	we'll place the CPU into a safe loop.
 	 */
-	while(1) {
-		;
-	}
+	while(1);
 }

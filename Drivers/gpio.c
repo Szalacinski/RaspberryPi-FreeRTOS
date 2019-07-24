@@ -9,7 +9,7 @@
 volatile BCM2835_GPIO_REGS * const pRegs = (BCM2835_GPIO_REGS *) (0x20200000);
 
 
-void SetGpioFunction(unsigned int pinNum, unsigned int funcNum) {
+void SetGpioFunction(unsigned int pinNum, enum GPIO_FUN funcNum) {
 
 	int offset = pinNum / 10;
 
@@ -20,11 +20,11 @@ void SetGpioFunction(unsigned int pinNum, unsigned int funcNum) {
 	val |= ((funcNum & 0x7) << (item * 3));
 	pRegs->GPFSEL[offset] = val;
 }
-
+/*
 void SetGpioDirection(unsigned int pinNum, enum GPIO_DIR dir) {
 	SetGpioFunction(pinNum,dir);
 }
-
+*/
 void SetGpio(unsigned int pinNum, unsigned int pinVal) {
 	unsigned long offset=pinNum/32;
 	unsigned long mask=(1<<(pinNum%32));

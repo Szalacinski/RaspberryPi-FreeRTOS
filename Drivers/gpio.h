@@ -1,6 +1,8 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
+#define ACT_LED 47
+
 /* GPIO event detect types */
 enum DETECT_TYPE {
 	DETECT_NONE,
@@ -21,9 +23,22 @@ enum PULL_STATE {
 };
 
 /* Pin data direction */
+/*
 enum GPIO_DIR {
 	GPIO_IN,
 	GPIO_OUT
+};
+*/
+/* Pin data direction */
+enum GPIO_FUN {
+	GPIO_IN,
+	GPIO_OUT,
+	FUN_5,
+	FUN_4,
+	FUN_0,
+	FUN_1,
+	FUN_2,
+	FUN_3
 };
 
 typedef struct {
@@ -56,9 +71,10 @@ typedef struct {
 
 
 /* GPIO pin setup */
-void SetGpioFunction	(unsigned int pinNum, unsigned int funcNum);
+void SetGpioFunction	(unsigned int pinNum, enum GPIO_FUN funcNum);
+
 /* A simple wrapper around SetGpioFunction */
-void SetGpioDirection	(unsigned int pinNum, enum GPIO_DIR dir);
+//void SetGpioDirection	(unsigned int pinNum, enum GPIO_DIR dir);
 
 /* Set GPIO output level */
 void SetGpio			(unsigned int pinNum, unsigned int pinVal);
