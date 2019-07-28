@@ -47,6 +47,8 @@ OBJECTS += $(BUILD_DIR)Drivers/uart.o
 #OBJECTS += $(BUILD_DIR)Drivers/spi.o
 #OBJECTS += $(BUILD_DIR)Drivers/i2c.o
 #OBJECTS += $(BUILD_DIR)Drivers/pcm.o
+#OBJECTS += $(BUILD_DIR)Drivers/emmc.o
+#OBJECTS += $(BUILD_DIR)Drivers/slave.o
 
 #video stuff
 #OBJECTS += $(BUILD_DIR)Drivers/video.o
