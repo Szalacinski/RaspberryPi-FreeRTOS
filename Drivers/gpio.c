@@ -6,102 +6,102 @@
 #include "gpio.h"
 
 
-volatile BCM2835_GPIO_REGS * const pRegs = (BCM2835_GPIO_REGS *) (0x20200000);
+volatile BCM2835_GPIO_REGS * const gpio_regs = (BCM2835_GPIO_REGS *) (0x20200000);
 
 
-void SetGpioFunction(unsigned int pinNum, enum GPIO_FUN funcNum) {
+void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func) {
 
-	int offset = pinNum / 10;
+	int offset = pin_num / 10;
 
-	unsigned long val = pRegs->GPFSEL[offset];	// Read in the original register value.
+	unsigned long val = gpio_regs->GPFSEL[offset];	// Read in the original register value.
 
-	int item = pinNum % 10;
+	int item = pin_num % 10;
 	val &= ~(0x7 << (item * 3));
-	val |= ((funcNum & 0x7) << (item * 3));
-	pRegs->GPFSEL[offset] = val;
+	val |= ((func & 0x7) << (item * 3));
+	gpio_regs->GPFSEL[offset] = val;
 }
 /*
 void SetGpioDirection(unsigned int pinNum, enum GPIO_DIR dir) {
 	SetGpioFunction(pinNum,dir);
 }
 */
-void SetGpio(unsigned int pinNum, unsigned int pinVal) {
-	unsigned long offset=pinNum/32;
-	unsigned long mask=(1<<(pinNum%32));
+void set_gpio(unsigned int pin_num, unsigned int pin_val) {
+	unsigned long offset = pin_num / 32;
+	unsigned long mask = (1 << (pin_num % 32));
 
-	if(pinVal) {
-		pRegs->GPSET[offset]|=mask;
+	if (pin_val) {
+		gpio_regs->GPSET[offset] |= mask;
 	} else {
-		pRegs->GPCLR[offset]|=mask;
+		gpio_regs->GPCLR[offset] |= mask;
 	}
 }
 
-int ReadGpio(unsigned int pinNum) {
-	return ((pRegs->GPLEV[pinNum/32])>>(pinNum%32))&1;
+int read_gpio(unsigned int pin_num) {
+	return ((gpio_regs->GPLEV[pin_num / 32]) >> (pin_num % 32)) & 1;
 }
 
-void EnableGpioDetect(unsigned int pinNum, enum DETECT_TYPE type)
+void enable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type)
 {
-	unsigned long mask=(1<<pinNum);
-	unsigned long offset=pinNum/32;
+	unsigned long mask = (1 << pin_num);
+	unsigned long offset = pin_num / 32;
 	
 	switch(type) {
 	case DETECT_RISING:
-		pRegs->GPREN[offset]|=mask;
+		gpio_regs->GPREN[offset] |= mask;
 		break;
 	case DETECT_FALLING:
-		pRegs->GPFEN[offset]|=mask;
+		gpio_regs->GPFEN[offset] |= mask;
 		break;
 	case DETECT_HIGH:
-		pRegs->GPHEN[offset]|=mask;
+		gpio_regs->GPHEN[offset] |= mask;
 		break;
 	case DETECT_LOW:
-		pRegs->GPLEN[offset]|=mask;
+		gpio_regs->GPLEN[offset] |= mask;
 		break;
 	case DETECT_RISING_ASYNC:
-		pRegs->GPAREN[offset]|=mask;
+		gpio_regs->GPAREN[offset] |= mask;
 		break;
 	case DETECT_FALLING_ASYNC:
-		pRegs->GPAFEN[offset]|=mask;
+		gpio_regs->GPAFEN[offset] |= mask;
 		break;
 	case DETECT_NONE:
 		break;
 	}
 }
 
-void DisableGpioDetect(unsigned int pinNum, enum DETECT_TYPE type)
+void disable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type)
 {
-	unsigned long mask=~(1<<(pinNum%32));
-	unsigned long offset=pinNum/32;
+	unsigned long mask = ~(1 << (pin_num % 32));
+	unsigned long offset = pin_num / 32;
 	
 	switch(type) {
 	case DETECT_RISING:
-		pRegs->GPREN[offset]&=mask;
+		gpio_regs->GPREN[offset] &= mask;
 		break;
 	case DETECT_FALLING:
-		pRegs->GPFEN[offset]&=mask;
+		gpio_regs->GPFEN[offset] &= mask;
 		break;
 	case DETECT_HIGH:
-		pRegs->GPHEN[offset]&=mask;
+		gpio_regs->GPHEN[offset] &= mask;
 		break;
 	case DETECT_LOW:
-		pRegs->GPLEN[offset]&=mask;
+		gpio_regs->GPLEN[offset] &= mask;
 		break;
 	case DETECT_RISING_ASYNC:
-		pRegs->GPAREN[offset]&=mask;
+		gpio_regs->GPAREN[offset] &= mask;
 		break;
 	case DETECT_FALLING_ASYNC:
-		pRegs->GPAFEN[offset]&=mask;
+		gpio_regs->GPAFEN[offset] &= mask;
 		break;
 	case DETECT_NONE:
 		break;
 	}
 }
 
-void ClearGpioInterrupt(unsigned int pinNum)
+void clear_gpio_interrupt(unsigned int pin_num)
 {
-	unsigned long mask=(1<<(pinNum%32));
-	unsigned long offset=pinNum/32;
+	unsigned long mask = (1 << (pin_num % 32));
+	unsigned long offset = pin_num / 32;
 
-	pRegs->GPEDS[offset]=mask;
+	gpio_regs->GPEDS[offset] = mask;
 }

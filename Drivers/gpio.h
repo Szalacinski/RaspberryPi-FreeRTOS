@@ -22,14 +22,7 @@ enum PULL_STATE {
 	PULL_RESERVED
 };
 
-/* Pin data direction */
-/*
-enum GPIO_DIR {
-	GPIO_IN,
-	GPIO_OUT
-};
-*/
-/* Pin data direction */
+/* Pin directions and functions */
 enum GPIO_FUN {
 	GPIO_IN,
 	GPIO_OUT,
@@ -69,27 +62,19 @@ typedef struct {
 	//Ignoring the reserved and test bytes
 } BCM2835_GPIO_REGS;
 
-
 /* GPIO pin setup */
-void SetGpioFunction	(unsigned int pinNum, enum GPIO_FUN funcNum);
-
-/* A simple wrapper around SetGpioFunction */
-//void SetGpioDirection	(unsigned int pinNum, enum GPIO_DIR dir);
-
-/* Set GPIO output level */
-void SetGpio			(unsigned int pinNum, unsigned int pinVal);
-
-/* Read GPIO pin level */
-int ReadGpio			(unsigned int pinNum);
-
-/* GPIO pull up/down resistor control function (NOT YET IMPLEMENTED) */
-int PudGpio				(unsigned int pinNum, enum PULL_STATE state);
+void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func_num);
+void set_gpio(unsigned int pin_num, unsigned int pin_val);
+int read_gpio(unsigned int pin_num);
 
 /* Interrupt related functions */
-void EnableGpioDetect	(unsigned int pinNum, enum DETECT_TYPE type);
-void DisableGpioDetect	(unsigned int pinNum, enum DETECT_TYPE type);
-void ClearGpioInterrupt	(unsigned int pinNum);
+void enable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type);
+void disable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type);
+void clear_gpio_interrupt(unsigned int pin_num);
 
-extern volatile BCM2835_GPIO_REGS * const pRegs;
+/* GPIO pull up/down resistor control function (NOT YET IMPLEMENTED) */
+//int pud_gpio(unsigned int pin_num, enum PULL_STATE state);
+
+extern volatile BCM2835_GPIO_REGS * const gpio_regs;
 
 #endif

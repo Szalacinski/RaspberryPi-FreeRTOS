@@ -42,6 +42,6 @@ typedef struct {
 
 extern volatile BCM2835_UART1_REGS * const uart1_regs;
 
-void print(char *ch);
+void uart_print(char *ch);
 
 #endif
