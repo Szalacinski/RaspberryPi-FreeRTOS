@@ -51,6 +51,7 @@ OBJECTS += $(BUILD_DIR)Drivers/uart.o
 #OBJECTS += $(BUILD_DIR)Drivers/slave.o
 #OBJECTS += $(BUILD_DIR)Drivers/dma.o
 #OBJECTS += $(BUILD_DIR)Drivers/timer.o
+#OBJECTS += $(BUILD_DIR)Drivers/arm_timer.o
 
 #video stuff
 #OBJECTS += $(BUILD_DIR)Drivers/video.o
