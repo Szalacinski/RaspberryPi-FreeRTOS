@@ -112,6 +112,6 @@ GET32:
     ldr r0,[r0]
     bx lr
 
-.globl dummy
-dummy:
+.globl waste_cycle
+waste_cycle:
     bx lr

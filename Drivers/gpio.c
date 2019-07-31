@@ -9,7 +9,7 @@
 volatile BCM2835_GPIO_REGS * const gpio_regs = (BCM2835_GPIO_REGS *) (0x20200000);
 
 
-void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func) {
+void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func_num) {
 
 	int offset = pin_num / 10;
 
@@ -17,7 +17,7 @@ void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func) {
 
 	int item = pin_num % 10;
 	val &= ~(0x7 << (item * 3));
-	val |= ((func & 0x7) << (item * 3));
+	val |= ((func_num & 0x7) << (item * 3));
 	gpio_regs->GPFSEL[offset] = val;
 }
 /*

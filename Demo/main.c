@@ -11,7 +11,7 @@ void task1(void *pParam) {
 	while(1) {
 		i++;
 		set_gpio(ACT_LED, 1);
-		uart_print("Light on!\n");
+		uart_print("Light on!\r\n");
 		vTaskDelay(200);
 	}
 }
@@ -23,7 +23,7 @@ void task2(void *pParam) {
 		i++;
 		vTaskDelay(100);
 		set_gpio(ACT_LED, 0);
-		uart_print("Light off!\n");
+		uart_print("Light off!\r\n");
 		vTaskDelay(100);
 	}
 }

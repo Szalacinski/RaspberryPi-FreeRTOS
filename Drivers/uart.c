@@ -3,8 +3,12 @@
 #include "gpio.h"
 
 volatile BCM2835_UART1_REGS * const uart1_regs = (BCM2835_UART1_REGS *) (0x20215040);
-
-extern void dummy(unsigned int);
+/*
+	Despite the waste_cycle assembly not needing an argument, this tricks
+	the compiler into thinking that work is being done.  In the future, a
+	solution utilizing timers would be more proper.
+*/
+extern void waste_cycle(unsigned int i);
 
 void uart_send(unsigned int data)
 {
@@ -26,10 +30,14 @@ void uart_print(char *c)
 	}
 }
 
+static void uart_delay(void)
+{
+	for(int i = 0; i < 150; ++i)
+		waste_cycle(i);
+}
+
 void uart_init(void)
 {
-	unsigned long a;
-
 	aux_regs->AUX_ENABLES |= 1;
 	uart1_regs->AUX_MU_IER_REG = 0;
 	uart1_regs->AUX_MU_CNTL_REG = 0;
@@ -42,11 +50,9 @@ void uart_init(void)
 	set_gpio_function(14, FUN_5);
 	set_gpio_function(15, FUN_5);
 	gpio_regs->GPPUD[0] = 0;
-	for(a = 0; a < 150; ++a)
-		dummy(a);
+	uart_delay();
 	gpio_regs->GPPUDCLK[0] = ((1 << 14) | (1 << 15));
-	for(a = 0; a < 150; ++a)
-		dummy(a);
+	uart_delay();
 	gpio_regs->GPPUDCLK[0] = 0;	
 	uart1_regs->AUX_MU_CNTL_REG = 3;	//RX/TX enable
 }
