@@ -63,7 +63,7 @@ typedef struct {
 	unsigned long	Reserved_A;
 	unsigned long	GPAFEN[2];
 	unsigned long	Reserved_B;
-	unsigned long	GPPUD[1];
+	unsigned long	GPPUD;
 	unsigned long	GPPUDCLK[2];
 	//Ignoring the reserved and test bytes
 } BCM2835_GPIO_REGS;
@@ -79,7 +79,7 @@ void disable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type);
 void clear_gpio_interrupt(unsigned int pin_num);
 
 /* GPIO pull up/down resistor control function (NOT YET IMPLEMENTED) */
-//int pud_gpio(unsigned int pin_num, enum PULL_STATE state);
+void gpio_pud(unsigned int pin_num, enum PULL_STATE state);
 
 extern volatile BCM2835_GPIO_REGS * const gpio_regs;
 

@@ -8,6 +8,19 @@
 
 volatile BCM2835_GPIO_REGS * const gpio_regs = (BCM2835_GPIO_REGS *) (0x20200000);
 
+/*
+	Despite the waste_cycle assembly not needing an argument, this tricks
+	the compiler into thinking that work is being done.  In the future, a
+	solution utilizing timers would be more proper.
+*/
+extern void waste_cycle(unsigned int i);
+
+static void gpio_delay(void)
+{
+	for(int i = 0; i < 150; ++i)
+		waste_cycle(i);
+}
+
 
 void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func_num) {
 
@@ -104,4 +117,14 @@ void clear_gpio_interrupt(unsigned int pin_num)
 	unsigned long offset = pin_num / 32;
 
 	gpio_regs->GPEDS[offset] = mask;
+}
+
+void gpio_pud(unsigned int pin_num, enum PULL_STATE state)
+{
+	gpio_regs->GPPUD = state;
+	gpio_delay();
+	gpio_regs->GPPUDCLK[0] = pin_num;
+	gpio_delay();
+	gpio_regs->GPPUD = 0;
+	gpio_regs->GPPUDCLK[0] = 0;
 }
