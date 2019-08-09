@@ -32,3 +32,8 @@ volatile BCM2835_MINI_SPI_REGS * const spi1_regs = (BCM2835_MINI_SPI_REGS *) (0x
 
 //No pinout for spi2
 //volatile BCM2835_MINI_SPI_REGS * const spi2_regs = (BCM2835_MINI_SPI_REGS *) (0x202150C0);
+/*
+void mini_spi_setup(unsigned long)
+{
+
+}*/

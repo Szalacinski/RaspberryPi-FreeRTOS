@@ -1,7 +1,13 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
-#define ACT_LED 47
+
+#define CAM_GPIO1	40
+#define WL_ON		41
+#define WIFI_CLK	43
+#define CAM_GPIO0	44
+#define BT_ON		45
+#define ACT_LED		47
 
 /* GPIO event detect types */
 enum DETECT_TYPE {

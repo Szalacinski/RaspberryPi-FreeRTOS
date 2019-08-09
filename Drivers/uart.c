@@ -38,12 +38,12 @@ static void uart_delay(void)
 
 void uart_init(void)
 {
-	aux_regs->AUX_ENABLES |= 1;
-	uart1_regs->AUX_MU_IER_REG = 0;
-	uart1_regs->AUX_MU_CNTL_REG = 0;
+	aux_regs->AUX_ENABLES |= 1;		//Enable Mini UART
+	uart1_regs->AUX_MU_IER_REG = 0;		//Reset register
+	uart1_regs->AUX_MU_CNTL_REG = 0;	//Disable RX/TX
 	uart1_regs->AUX_MU_LCR_REG = 3;		//8-bit mode
 	uart1_regs->AUX_MU_MCR_REG = 0;		//RTS line low
-	uart1_regs->AUX_MU_IER_REG = 5;
+	uart1_regs->AUX_MU_IER_REG = 5;		//Enable receive interrupt
 	uart1_regs->AUX_MU_IIR_REG = 0xC6;
 	uart1_regs->AUX_MU_BAUD_REG = 270;	//115200 baud
 
@@ -54,5 +54,5 @@ void uart_init(void)
 	gpio_regs->GPPUDCLK[0] = ((1 << 14) | (1 << 15));
 	uart_delay();
 	gpio_regs->GPPUDCLK[0] = 0;	
-	uart1_regs->AUX_MU_CNTL_REG = 3;	//RX/TX enable
+	uart1_regs->AUX_MU_CNTL_REG = 3;	//EnableRX/TX
 }
