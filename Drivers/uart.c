@@ -37,6 +37,6 @@ void uart_init(void)
 
 	set_gpio_function(14, FUN_5);
 	set_gpio_function(15, FUN_5);
-	gpio_pud((1 << 14) | (1 << 15), PULL_DISABLE);
-	uart1_regs->AUX_MU_CNTL_REG = 3;	//EnableRX/TX
+	gpio_pud(PIN(14) | PIN(15), PULL_DISABLE);
+	uart1_regs->AUX_MU_CNTL_REG = 3;	//Enable RX/TX
 }

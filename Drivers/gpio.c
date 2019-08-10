@@ -1,10 +1,4 @@
-/**
- *	Quick and very Dirty GPIO API.
- *
- **/
-
 #include "gpio.h"
-
 
 volatile BCM2835_GPIO_REGS * const gpio_regs = (BCM2835_GPIO_REGS *) (0x20200000);
 
@@ -39,6 +33,7 @@ void SetGpioDirection(unsigned int pinNum, enum GPIO_DIR dir) {
 }
 */
 void set_gpio(unsigned int pin_num, unsigned int pin_val) {
+	//TODO: Rewrite for handling more pins at once
 	unsigned long offset = pin_num / 32;
 	unsigned long mask = (1 << (pin_num % 32));
 
@@ -55,6 +50,7 @@ int read_gpio(unsigned int pin_num) {
 
 void enable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type)
 {
+	//TODO: Rewrite for handling more pins at once
 	unsigned long mask = (1 << pin_num);
 	unsigned long offset = pin_num / 32;
 	
@@ -84,6 +80,7 @@ void enable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type)
 
 void disable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type)
 {
+	//TODO: Rewrite for handling more pins at once
 	unsigned long mask = ~(1 << (pin_num % 32));
 	unsigned long offset = pin_num / 32;
 	
@@ -113,18 +110,21 @@ void disable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type)
 
 void clear_gpio_interrupt(unsigned int pin_num)
 {
+	//TODO: Rewrite for handling more pins at once
 	unsigned long mask = (1 << (pin_num % 32));
 	unsigned long offset = pin_num / 32;
 
 	gpio_regs->GPEDS[offset] = mask;
 }
 
-void gpio_pud(unsigned int pin_num, enum PULL_STATE state)
+void gpio_pud(unsigned long long pin_num, enum PULL_STATE state)
 {
 	gpio_regs->GPPUD = state;
 	gpio_delay();
-	gpio_regs->GPPUDCLK[0] = pin_num;
+	gpio_regs->GPPUDCLK[0] = (unsigned long)(pin_num & 0xFFFFFFFF);
+	gpio_regs->GPPUDCLK[1] = (unsigned long)(pin_num >> 32);
 	gpio_delay();
 	gpio_regs->GPPUD = 0;
 	gpio_regs->GPPUDCLK[0] = 0;
+	gpio_regs->GPPUDCLK[1] = 0;
 }

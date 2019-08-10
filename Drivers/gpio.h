@@ -1,6 +1,7 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
+#define PIN(x) (1 << x)
 
 #define CAM_GPIO1	40
 #define WL_ON		41
@@ -79,7 +80,7 @@ void disable_gpio_detect(unsigned int pin_num, enum DETECT_TYPE type);
 void clear_gpio_interrupt(unsigned int pin_num);
 
 /* GPIO pull up/down resistor control function (NOT YET IMPLEMENTED) */
-void gpio_pud(unsigned int pin_num, enum PULL_STATE state);
+void gpio_pud(unsigned long long pin_num, enum PULL_STATE state);
 
 extern volatile BCM2835_GPIO_REGS * const gpio_regs;
 
