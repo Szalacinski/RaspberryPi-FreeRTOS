@@ -4,6 +4,7 @@
 #include "interrupts.h"
 #include "gpio.h"
 #include "uart.h"
+#include "wifi.h"
 
 void task1(void *pParam) {
 
@@ -34,6 +35,8 @@ void main(void) {
 	InitInterruptController();
 	uart_init();
 	set_gpio_function(ACT_LED, GPIO_OUT);
+	wifi_setup();
+	wifi_on();
 
 	xTaskCreate(task1, "LED_0", 128, NULL, 0, NULL);
 	xTaskCreate(task2, "LED_1", 128, NULL, 0, NULL);

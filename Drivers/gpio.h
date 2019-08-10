@@ -1,7 +1,7 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
-#define PIN(x) (1 << x)
+#define PIN(x) (1ULL << x)
 
 #define CAM_GPIO1	40
 #define WL_ON		41

@@ -53,7 +53,7 @@ OBJECTS += $(BUILD_DIR)Drivers/uart.o
 #OBJECTS += $(BUILD_DIR)Drivers/timer.o
 #OBJECTS += $(BUILD_DIR)Drivers/arm_timer.o
 #OBJECTS += $(BUILD_DIR)Drivers/gpclk.o
-#OBJECTS += $(BUILD_DIR)Drivers/wifi.o
+OBJECTS += $(BUILD_DIR)Drivers/wifi.o
 
 #video stuff
 #OBJECTS += $(BUILD_DIR)Drivers/video.o

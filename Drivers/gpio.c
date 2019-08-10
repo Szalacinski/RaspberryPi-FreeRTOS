@@ -16,7 +16,8 @@ static void gpio_delay(void)
 }
 
 
-void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func_num) {
+void set_gpio_function(unsigned int pin_num, enum GPIO_FUN func_num)
+{
 
 	int offset = pin_num / 10;
 
@@ -32,7 +33,8 @@ void SetGpioDirection(unsigned int pinNum, enum GPIO_DIR dir) {
 	SetGpioFunction(pinNum,dir);
 }
 */
-void set_gpio(unsigned int pin_num, unsigned int pin_val) {
+void set_gpio(unsigned int pin_num, unsigned int pin_val)
+{
 	//TODO: Rewrite for handling more pins at once
 	unsigned long offset = pin_num / 32;
 	unsigned long mask = (1 << (pin_num % 32));
@@ -44,7 +46,8 @@ void set_gpio(unsigned int pin_num, unsigned int pin_val) {
 	}
 }
 
-int read_gpio(unsigned int pin_num) {
+int read_gpio(unsigned int pin_num)
+{
 	return ((gpio_regs->GPLEV[pin_num / 32]) >> (pin_num % 32)) & 1;
 }
 
